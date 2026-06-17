@@ -1,0 +1,130 @@
+  let activeYear = db.prepare("SELECT id FROM annees_scolaires WHERE est_active = 1 AND archivee = 0 AND school_id = ?").get(schoolId) as any;
+    activeYear = db.prepare("SELECT id FROM annees_scolaires WHERE libelle = ? AND archivee = 0 AND school_id = ?").get(currentLibelle, schoolId) as any;
+    activeYear = db.prepare("SELECT id FROM annees_scolaires WHERE archivee = 0 AND school_id = ? ORDER BY libelle DESC LIMIT 1").get(schoolId) as any;
+const schoolExists = db.prepare("SELECT * FROM school_info").get();
+const adminExists = db.prepare("SELECT * FROM utilisateurs WHERE role = 'admin'").get() as any;
+  const firstSchool = db.prepare("SELECT id FROM school_info ORDER BY id ASC LIMIT 1").get() as any;
+    const firstSchool = db.prepare("SELECT id FROM school_info ORDER BY id ASC LIMIT 1").get() as any;
+const rolePermsCount = db.prepare("SELECT COUNT(*) as count FROM role_permissions").get() as any;
+  const schools = db.prepare("SELECT id FROM school_info").all() as any[];
+const yearExists = db.prepare("SELECT * FROM annees_scolaires").get();
+  const schools = db.prepare("SELECT id FROM school_info").all() as any[];
+const reunionExists = db.prepare("SELECT * FROM reunions").get();
+  const schools = db.prepare("SELECT id FROM school_info").all() as any[];
+const devoirExists = db.prepare("SELECT * FROM devoirs").get();
+  const schools = db.prepare("SELECT id FROM school_info").all() as any[];
+    const classe = db.prepare("SELECT id FROM classes WHERE school_id = ? LIMIT 1").get(school.id) as any;
+    const matiere = db.prepare("SELECT id FROM matieres WHERE school_id = ? LIMIT 1").get(school.id) as any;
+    const notes = db.prepare("SELECT * FROM notes WHERE eleve_id = ? AND annee_id = ? AND school_id = ?").all(eleveId, anneeId, schoolId) as any[];
+      SELECT m.*, cm.coefficient 
+      const dbUser = db.prepare("SELECT school_id FROM utilisateurs WHERE id = ?").get(user.id) as any;
+          const dbUser = db.prepare("SELECT school_id FROM utilisateurs WHERE id = ?").get(decoded.id) as any;
+      const dbUser = db.prepare("SELECT school_id FROM utilisateurs WHERE id = ?").get(id) as any;
+    const elevesCount = db.prepare("SELECT COUNT(*) as count FROM eleves e JOIN classes c ON e.classe_id = c.id WHERE c.annee_id = ? AND e.school_id = ?").get(yearId, req.schoolId).count;
+    const enseignantsCount = db.prepare("SELECT COUNT(*) as count FROM enseignants WHERE school_id = ?").get(req.schoolId).count;
+    const classesCount = db.prepare("SELECT COUNT(*) as count FROM classes WHERE annee_id = ? AND school_id = ?").get(yearId, req.schoolId).count;
+      SELECT SUM(montant) as total 
+      SELECT p.*, e.nom, e.prenom 
+    const year = db.prepare("SELECT date_debut, date_fin FROM annees_scolaires WHERE id = ?").get(yearId) as any;
+        SELECT SUM(montant) as total 
+    const user = db.prepare("SELECT role FROM utilisateurs WHERE id = ?").get(req.userId) as any;
+      const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all() as any[];
+        const createSql = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name = ?").get(tableName) as any;
+          rows = db.prepare(`SELECT * FROM ${tableName} WHERE school_id = ?`).all(req.schoolId);
+          rows = db.prepare(`SELECT * FROM ${tableName} WHERE id = ?`).all(req.schoolId);
+          rows = db.prepare(`SELECT * FROM ${tableName}`).all();
+      res.json(db.prepare("SELECT * FROM school_info WHERE id = ?").get(req.schoolId));
+      const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all();
+        eleves: db.prepare("SELECT COUNT(*) as count FROM eleves WHERE school_id = ?").get(req.schoolId).count,
+        classes: db.prepare("SELECT COUNT(*) as count FROM classes WHERE school_id = ?").get(req.schoolId).count,
+        notes: db.prepare("SELECT COUNT(*) as count FROM notes WHERE school_id = ?").get(req.schoolId).count,
+        paiements: db.prepare("SELECT COUNT(*) as count FROM paiements WHERE school_id = ?").get(req.schoolId).count,
+      SELECT c.*, (SELECT COUNT(*) FROM eleves e WHERE e.classe_id = c.id AND e.school_id = ?) as nombre_eleves
+    const eleves = db.prepare("SELECT * FROM eleves WHERE classe_id = ? AND school_id = ? ORDER BY nom, prenom").all(id, req.schoolId);
+      SELECT cm.*, m.nom as matiere_nom, m.categorie, m.parent_id, e.nom as enseignant_nom, e.prenom as enseignant_prenom
+      SELECT n.*, m.nom as matiere_nom
+      SELECT 
+        IFNULL((SELECT SUM(montant) FROM paiements p WHERE p.eleve_id = e.id AND p.annee_id = ? AND p.type_paiement = 'Frais de scolarité' AND p.school_id = ?), 0) as total_paye_scolarite,
+        IFNULL((SELECT SUM(montant) FROM paiements p WHERE p.eleve_id = e.id AND p.annee_id = ? AND p.type_paiement = 'Frais d''inscription' AND p.school_id = ?), 0) as total_paye_inscription,
+        IFNULL((SELECT SUM(montant) FROM paiements p WHERE p.eleve_id = e.id AND p.annee_id = ? AND p.school_id = ?), 0) as total_paye
+    const eleve = db.prepare("SELECT nom, prenom, matricule FROM eleves WHERE id = ? AND school_id = ?").get(id, req.schoolId) as any;
+      SELECT 
+    const sourceClasses = db.prepare("SELECT * FROM classes WHERE annee_id = ? AND school_id = ?").all(source_year_id, req.schoolId);
+    const targetClasses = db.prepare("SELECT * FROM classes WHERE annee_id = ? AND school_id = ?").all(target_year_id, req.schoolId);
+        SELECT e.id, e.nom, e.prenom, e.matricule
+      SELECT e.*, GROUP_CONCAT(DISTINCT COALESCE(p.nom, m.nom)) as matieres_noms, GROUP_CONCAT(m.id) as matieres_ids
+    const checkEnseignant = db.prepare("SELECT id FROM enseignants WHERE email = ? AND school_id = ?");
+    const checkUser = db.prepare("SELECT id FROM utilisateurs WHERE email = ?");
+          const matiere = db.prepare("SELECT id FROM matieres WHERE LOWER(TRIM(nom)) = LOWER(TRIM(?)) AND school_id = ?").get(e.matiere_nom, req.schoolId) as any;
+            const existingRel = db.prepare("SELECT 1 FROM enseignant_matieres WHERE enseignant_id = ? AND matiere_id = ? AND school_id = ?").get(enseignantId, matiere.id, req.schoolId);
+    const matiere = db.prepare("SELECT nom FROM matieres WHERE id = ? AND school_id = ?").get(matiereId, req.schoolId) as any;
+      SELECT DISTINCT e.* 
+        SELECT DISTINCT e.* 
+      SELECT m.*, p.nom as parent_nom 
+    db.prepare("DELETE FROM classe_matieres WHERE matiere_id = ? AND EXISTS (SELECT 1 FROM matieres m WHERE m.id = matiere_id AND m.school_id = ?)").run(id, req.schoolId);
+    db.prepare("DELETE FROM enseignant_matieres WHERE matiere_id = ? AND EXISTS (SELECT 1 FROM matieres m WHERE m.id = matiere_id AND m.school_id = ?)").run(id, req.schoolId);
+      SELECT ed.*, m.nom as matiere_nom, e.nom as enseignant_nom, e.prenom as enseignant_prenom
+    const association = db.prepare("SELECT * FROM classe_matieres WHERE classe_id = ? AND matiere_id = ? AND school_id = ?")
+      SELECT tr.*, e.nom, e.prenom 
+    const classes = db.prepare("SELECT id, nom FROM classes WHERE school_id = ? ORDER BY nom").all(req.schoolId);
+    const user = db.prepare("SELECT role FROM utilisateurs WHERE id = ?").get(userId) as any;
+      const users = db.prepare("SELECT id, nom, email, role, approuve, permissions, otp_code, otp_expiry, is_first_login, can_write, last_seen FROM utilisateurs WHERE school_id = ?").all(req.schoolId);
+      const u = db.prepare("SELECT id, nom, email, role, approuve, permissions, otp_code, otp_expiry, is_first_login, can_write FROM utilisateurs WHERE id = ?").get(userId) as any;
+    const enseignant = db.prepare("SELECT nom, prenom, email FROM enseignants WHERE id = ? AND school_id = ?").get(enseignant_id, req.schoolId) as any;
+      const teachers = db.prepare("SELECT * FROM enseignants").all() as any[];
+        const existingUser = db.prepare("SELECT * FROM utilisateurs WHERE enseignant_id = ? OR email = ?").get(teacher.id, teacher.email) as any;
+      const user = db.prepare("SELECT email, nom FROM utilisateurs WHERE id = ? AND school_id = ?").get(id, req.schoolId) as any;
+    const user = db.prepare("SELECT email, nom FROM utilisateurs WHERE id = ? AND school_id = ?").get(id, req.schoolId) as any;
+    const roles = db.prepare("SELECT * FROM role_permissions WHERE school_id = ?").all(req.schoolId);
+    let user = db.prepare("SELECT * FROM utilisateurs WHERE google_id = ? OR email = ?").get(google_id, email) as any;
+      const firstSchool = db.prepare("SELECT id FROM school_info ORDER BY id ASC LIMIT 1").get() as any;
+      user = db.prepare("SELECT * FROM utilisateurs WHERE id = ?").get(info.lastInsertRowid);
+      const enseignant = db.prepare("SELECT id FROM enseignants WHERE email = ? AND school_id = ?").get(user.email, user.school_id) as any;
+    const rolePerms = db.prepare("SELECT permissions FROM role_permissions WHERE role = ? AND school_id = ?").get(user.role, user.school_id) as any;
+      const user = db.prepare("SELECT * FROM utilisateurs WHERE id = ? AND school_id = ?").get(id, req.schoolId) as any;
+    const user = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(email) as any;
+    const user = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(email) as any;
+    const user = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(email) as any;
+      let user = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(profile.email) as any;
+        const userCount = (db.prepare("SELECT COUNT(*) as count FROM utilisateurs").get() as any).count;
+          const firstSchool = db.prepare("SELECT id FROM school_info ORDER BY id ASC LIMIT 1").get() as any;
+        user = db.prepare("SELECT * FROM utilisateurs WHERE id = ?").get(info.lastInsertRowid);
+    const user = db.prepare("SELECT * FROM utilisateurs WHERE email = ?").get(email) as any;
+        const enseignant = db.prepare("SELECT id FROM enseignants WHERE email = ? AND school_id = ?").get(user.email, user.school_id) as any;
+      const rolePerms = db.prepare("SELECT permissions FROM role_permissions WHERE role = ? AND school_id = ?").get(user.role, user.school_id) as any;
+    const user = db.prepare("SELECT id, nom, email, role, approuve, permissions, enseignant_id, google_id, school_id FROM utilisateurs WHERE id = ?").get(req.user.id) as any;
+    const rolePerms = db.prepare("SELECT permissions FROM role_permissions WHERE role = ? AND school_id = ?").get(user.role, user.school_id) as any;
+    const manualAlertes = db.prepare("SELECT *, 'manual' as type FROM alertes WHERE school_id = ? ORDER BY date_alerte DESC").all(req.schoolId);
+      SELECT * FROM activites_scolaires 
+      SELECT * FROM reunions 
+      SELECT d.*, m.nom as matiere_nom, c.nom as classe_nom 
+    const activeYear = db.prepare("SELECT * FROM annees_scolaires WHERE id = ?").get(yearId) as any;
+      SELECT 
+        SELECT eleve_id, SUM(montant) as total_paye 
+        SELECT eleve_id, SUM(montant) as total_paye 
+      SELECT n.*, e.nom, e.prenom, m.nom as matiere_nom 
+      SELECT * FROM notes 
+       const isAllowed = db.prepare("SELECT 1 FROM enseignant_matieres WHERE enseignant_id = ? AND matiere_id = ? AND school_id = ?").get(enseignant_id, matiere_id, req.schoolId);
+       const isAllowed = db.prepare("SELECT 1 FROM enseignant_matieres WHERE enseignant_id = ? AND matiere_id = ? AND school_id = ?").get(enseignant_id, matiere_id, req.schoolId);
+    const elevesCount = db.prepare("SELECT COUNT(*) as count FROM eleves WHERE classe_id = ? AND school_id = ?").get(id, req.schoolId) as any;
+      SELECT p.*, e.nom, e.prenom 
+    const eleve = db.prepare("SELECT nom, prenom FROM eleves WHERE id = ? AND school_id = ?").get(eleve_id, req.schoolId) as any;
+    res.json(db.prepare("SELECT * FROM activites_scolaires WHERE annee_id = ? AND school_id = ? ORDER BY trimestre, date_debut").all(id, req.schoolId));
+      SELECT 
+        (SELECT COUNT(*) FROM classes c WHERE c.annee_id = a.id AND c.school_id = ?) as classes_count,
+        (SELECT COUNT(*) FROM eleves e JOIN classes c ON e.classe_id = c.id WHERE c.annee_id = a.id AND e.school_id = ?) as eleves_count
+    const activeYear = db.prepare("SELECT id FROM annees_scolaires WHERE est_active = 1 AND id = ? AND school_id = ?").get(id, req.schoolId);
+        const classes = db.prepare("SELECT id FROM classes WHERE annee_id = ? AND school_id = ? ORDER BY nom").all(id, req.schoolId);
+    const classesCount = db.prepare("SELECT COUNT(*) as count FROM classes WHERE annee_id = ? AND school_id = ?").get(id, req.schoolId).count;
+    const notesCount = db.prepare("SELECT COUNT(*) as count FROM notes WHERE annee_id = ? AND school_id = ?").get(id, req.schoolId).count;
+    const paiementsCount = db.prepare("SELECT COUNT(*) as count FROM paiements WHERE annee_id = ? AND school_id = ?").get(id, req.schoolId).count;
+    let activeYear = db.prepare("SELECT * FROM annees_scolaires WHERE est_active = 1 AND archivee = 0 AND school_id = ?").get(req.schoolId);
+      activeYear = db.prepare("SELECT * FROM annees_scolaires WHERE libelle = ? AND archivee = 0 AND school_id = ?").get(currentLibelle, req.schoolId);
+      activeYear = db.prepare("SELECT * FROM annees_scolaires WHERE archivee = 0 AND school_id = ? ORDER BY libelle DESC LIMIT 1").get(req.schoolId);
+        const classes = db.prepare("SELECT * FROM classes WHERE annee_id = ? AND school_id = ? ORDER BY nom").all(from_year_id, req.schoolId);
+          const matieres = db.prepare("SELECT matiere_id FROM classe_matieres WHERE classe_id = ? AND school_id = ?").all(cls.id, req.schoolId);
+    const activeYear = db.prepare("SELECT * FROM annees_scolaires WHERE est_active = 1 AND school_id = ?").get(req.schoolId);
+    let nextYear = db.prepare("SELECT * FROM annees_scolaires WHERE libelle = ? AND school_id = ?").get(nextLibelle, req.schoolId);
+      const classes = db.prepare("SELECT * FROM classes WHERE annee_id = ? AND school_id = ? ORDER BY nom").all(activeYear.id, req.schoolId);
+        const matieres = db.prepare("SELECT matiere_id FROM classe_matieres WHERE classe_id = ? AND school_id = ?").all(cls.id, req.schoolId);
+        SELECT a.*, u.nom as utilisateur_nom 

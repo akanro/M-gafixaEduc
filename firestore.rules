@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Default Deny Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Global Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Role Lookup: Only include isAdmin if verified against a trusted source
+    function isAdmin() {
+      return isSignedIn() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'super_admin'] ||
+         (request.auth.token.email == "ayedeguef@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    // --- Entity Validations ---
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['nom', 'email', 'role']) &&
+             data.nom is string && data.nom.size() <= 100 &&
+             data.email is string && data.email.size() <= 150 &&
+             data.role in ['super_admin', 'admin', 'secretariat', 'secretaire', 'enseignant', 'comptable'] &&
+             (!('school_id' in data) || (data.school_id is string && data.school_id.size() <= 128));
+    }
+
+    function isValidSchool(data) {
+      return data.keys().hasAll(['nom']) &&
+             data.nom is string && data.nom.size() <= 200 &&
+             (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+             (!('telephone' in data) || (data.telephone is string && data.telephone.size() <= 50));
+    }
+
+    function isValidClasse(data) {
+      return data.keys().hasAll(['nom', 'niveau']) &&
+             data.nom is string && data.nom.size() <= 100 &&
+             data.niveau is string && data.niveau.size() <= 50 &&
+             (!('school_id' in data) || (data.school_id is string && data.school_id.size() <= 128));
+    }
+
+    // --- Collection Matches ---
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin(); // Only admins can browse user list
+      
+      allow create: if isSignedIn() && isValidId(userId) && isOwner(userId) && isValidUser(incoming());
+      
+      allow update: if isSignedIn() && (isOwner(userId) || isAdmin()) &&
+                    isValidUser(incoming()) &&
+                    (isAdmin() || (incoming().role == existing().role)); // Non-admins can't escalate role
+      
+      allow delete: if isAdmin();
+    }
+
+    match /schools/{schoolId} {
+      allow read: if isSignedIn();
+      allow create, delete: if isAdmin();
+      
+      allow update: if isAdmin() && isValidSchool(incoming()) &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['nom', 'slogan', 'adresse', 'telephone', 'email', 'logo', 'devise']);
+
+      match /classes/{classeId} {
+        allow read: if isSignedIn();
+        allow create, delete: if isAdmin();
+        allow update: if isAdmin() && isValidClasse(incoming());
+      }
+    }
+  }
+}

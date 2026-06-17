@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "SchoolInfo": {
+      "title": "SchoolInfo",
+      "description": "Information about the school",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string" },
+        "slogan": { "type": "string" },
+        "adresse": { "type": "string" },
+        "telephone": { "type": "string" },
+        "email": { "type": "string" },
+        "logo": { "type": "string" },
+        "devise": { "type": "string" }
+      },
+      "required": ["nom"]
+    },
+    "User": {
+      "title": "User",
+      "description": "System users",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["super_admin", "admin", "secretariat", "secretaire", "enseignant", "comptable"] },
+        "school_id": { "type": "string" }
+      },
+      "required": ["nom", "email", "role"]
+    },
+    "Classe": {
+      "title": "Classe",
+      "description": "School classes",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string" },
+        "niveau": { "type": "string" },
+        "frais_scolarite": { "type": "number" },
+        "frais_inscription": { "type": "number" },
+        "annee_id": { "type": "string" },
+        "school_id": { "type": "string" }
+      },
+      "required": ["nom", "niveau"]
+    }
+  },
+  "firestore": {
+    "/schools/{schoolId}": {
+      "schema": "SchoolInfo",
+      "description": "School information"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/schools/{schoolId}/classes/{classeId}": {
+      "schema": "Classe",
+      "description": "Classes within a school"
+    }
+  }
+}

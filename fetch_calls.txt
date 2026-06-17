@@ -1,0 +1,103 @@
+src/components/ThemeProvider.tsx:35:    fetch('/api/school-info', {
+src/components/Layout.tsx:49:    fetch(`/api/annees/active?t=${Date.now()}`, {
+src/components/Layout.tsx:58:    fetch('/api/school-info', {
+src/pages/Timetable.tsx:39:    fetch(`/api/emplois/${classeId}`)
+src/pages/Timetable.tsx:47:    fetch('/api/classes')
+src/pages/Timetable.tsx:51:    fetch('/api/matieres')
+src/pages/Timetable.tsx:55:    fetch('/api/config')
+src/pages/Timetable.tsx:66:    fetch('/api/timetable-requests', {
+src/pages/Timetable.tsx:80:      fetch(`/api/classes/${selectedClasse}/details`)
+src/pages/Timetable.tsx:115:    fetch(url, {
+src/pages/Timetable.tsx:143:      fetch(`/api/emplois/${id}`, { method: 'DELETE' }).then(() => fetchEmplois(selectedClasse));
+src/pages/Grades.tsx:42:      fetch(`/api/classes/${modalFormData.classe_id}/details`)
+src/pages/Grades.tsx:62:      fetch(`/api/notes/eleve/${modalFormData.eleve_id}/matiere/${modalFormData.matiere_id}/trimestre/${modalFormData.trimestre}`)
+src/pages/Grades.tsx:111:    fetch('/api/classes')
+src/pages/Grades.tsx:115:    fetch('/api/matieres')
+src/pages/Grades.tsx:120:          fetch('/api/enseignants')
+src/pages/Grades.tsx:138:    fetch('/api/eleves')
+src/pages/Grades.tsx:143:    fetch('/api/school-info', {
+src/pages/Grades.tsx:157:      fetch(`/api/notes/${selectedClasse}`)
+src/pages/Grades.tsx:169:    fetch(`/api/classes/${selectedClasse}/details`)
+src/pages/Grades.tsx:202:    fetch('/api/notes', {
+src/pages/Grades.tsx:221:        fetch(`/api/notes/${selectedClasse}`).then(res => res.json()).then(setNotes);
+src/pages/Grades.tsx:893:    fetch(`/api/classes/${selectedClasse}/details`)
+src/pages/Grades.tsx:982:      const response = await fetch('/api/notes/bulk', {
+src/pages/Grades.tsx:1001:        fetch(`/api/notes/${selectedClasse}`).then(res => res.json()).then(setNotes);
+src/pages/Grades.tsx:1026:    fetch(`/api/classes/${selectedClasse}/details`)
+src/pages/Grades.tsx:1218:      const response = await fetch('/api/notes/bulk', {
+src/pages/Grades.tsx:1237:        fetch(`/api/notes/${selectedClasse}`).then(res => res.json()).then(setNotes);
+src/pages/Dashboard.tsx:67:    fetch('/api/alertes')
+src/pages/Dashboard.tsx:84:    fetch('/api/stats')
+src/pages/Dashboard.tsx:95:    fetch('/api/stats/chart')
+src/pages/Dashboard.tsx:117:    fetch(url, {
+src/pages/Dashboard.tsx:141:      fetch(`/api/alertes/${id}`, { method: 'DELETE' }).then(() => fetchAlertes());
+src/pages/Settings.tsx:112:      const res = await fetch('/api/auth/google/url');
+src/pages/Settings.tsx:142:    return fetch(url, { ...options, headers });
+src/pages/Settings.tsx:729:    fetch(url, {
+src/pages/Alerts.tsx:10:      fetch('/api/alertes').then(res => res.json()),
+src/pages/Alerts.tsx:11:      fetch('/api/timetable-requests').then(res => res.json())
+src/pages/Alerts.tsx:33:      fetch(`/api/timetable-requests/${alert.requestId}/status`, {
+src/pages/Alerts.tsx:39:      fetch(`/api/alertes/${alert.id}/approve`, { method: 'POST' })
+src/pages/Alerts.tsx:46:      fetch(`/api/timetable-requests/${alert.requestId}/status`, {
+src/pages/Alerts.tsx:52:      fetch(`/api/alertes/${alert.id}/refuse`, { method: 'POST' })
+src/pages/Signup.tsx:32:      const res = await fetch('/api/auth/google/url');
+src/pages/Signup.tsx:72:      const res = await fetch('/api/auth/signup', {
+src/pages/TimetableRequests.tsx:8:    fetch('/api/timetable-requests').then(res => res.json()).then(setRequests);
+src/pages/TimetableRequests.tsx:18:    fetch(`/api/timetable-requests/${id}/status`, {
+src/pages/Payments.tsx:40:    fetch('/api/paiements')
+src/pages/Payments.tsx:47:    fetch('/api/stats/paiements-par-classe')
+src/pages/Payments.tsx:55:    fetch('/api/school-info', {
+src/pages/Payments.tsx:68:    fetch('/api/classes')
+src/pages/Payments.tsx:79:    fetch('/api/eleves')
+src/pages/Payments.tsx:91:    fetch('/api/paiements', {
+src/pages/Payments.tsx:101:      fetch('/api/eleves').then(res => res.json()).then(setEleves);
+src/pages/Promotions.tsx:47:    fetch('/api/annees')
+src/pages/Promotions.tsx:73:      fetch(`/api/classes?annee_id=${sourceYearId}`)
+src/pages/Promotions.tsx:82:      fetch(`/api/classes?annee_id=${targetYearId}`)
+src/pages/Promotions.tsx:91:      fetch(`/api/eleves/by-year/${sourceYearId}`)
+src/pages/Promotions.tsx:169:    fetch('/api/promotions', {
+src/pages/Promotions.tsx:231:    fetch(`/api/promotions/automatique/preview?source_year_id=${sourceYearId}&target_year_id=${targetYearId}`)
+src/pages/Promotions.tsx:242:    fetch('/api/promotions/automatique/execute', {
+src/pages/AuditLogs.tsx:32:      const response = await fetch('/api/audit-logs', {
+src/pages/Teachers.tsx:38:    fetch('/api/enseignants')
+src/pages/Teachers.tsx:51:    fetch('/api/matieres')
+src/pages/Teachers.tsx:91:    fetch(url, {
+src/pages/Teachers.tsx:118:      fetch(`/api/enseignants/${id}`, { method: 'DELETE' })
+src/pages/Teachers.tsx:222:                fetch(`/api/users/enseignant/${prof.id}`).then(res => res.json()).then(setTeacherUser);
+src/pages/Teachers.tsx:329:                      fetch('/api/users/generate', {
+src/pages/Teachers.tsx:630:                          fetch('/api/enseignants/import', {
+src/pages/Subjects.tsx:93:      fetch('/api/matieres', {
+src/pages/Subjects.tsx:134:    fetch('/api/matieres').then(res => res.json()).then(setMatieres);
+src/pages/Subjects.tsx:146:    fetch(url, {
+src/pages/Subjects.tsx:173:      fetch(`/api/matieres/${id}`, { method: 'DELETE' })
+src/pages/Classes.tsx:58:    fetch(`/api/enseignants/par-matiere/${matiereId}`)
+src/pages/Classes.tsx:223:    fetch('/api/classes')
+src/pages/Classes.tsx:237:    fetch('/api/matieres')
+src/pages/Classes.tsx:247:    fetch('/api/enseignants')
+src/pages/Classes.tsx:282:        const res = await fetch(`/api/classes/${editingClasse.id}`, {
+src/pages/Classes.tsx:295:            const res = await fetch('/api/classes', {
+src/pages/Classes.tsx:306:          const res = await fetch('/api/classes', {
+src/pages/Classes.tsx:396:    fetch(`/api/classes/${id}/details`)
+src/pages/Classes.tsx:435:    fetch(url, {
+src/pages/Classes.tsx:450:            return fetch(`/api/classes/${viewingClasse.id}/matieres/${child.id}`, {
+src/pages/Classes.tsx:490:      await fetch(`/api/classes/${viewingClasse.id}/matieres/${matiereId}`, {
+src/pages/Classes.tsx:498:          return fetch(`/api/classes/${viewingClasse.id}/matieres/${child.id}`, {
+src/pages/Classes.tsx:615:      fetch(`/api/classes/${id}`, { method: 'DELETE' }).then(() => fetchClasses());
+src/pages/Classes.tsx:638:        const res = await fetch('/api/classes', {
+src/pages/Students.tsx:62:    fetch('/api/eleves')
+src/pages/Students.tsx:76:    fetch('/api/school-info', {
+src/pages/Students.tsx:90:    fetch('/api/classes')
+src/pages/Students.tsx:142:    fetch(url, {
+src/pages/Students.tsx:369:    fetch('/api/paiements', {
+src/pages/Students.tsx:405:    fetch('/api/promotion', {
+src/pages/Students.tsx:422:      fetch(`/api/eleves/${id}`, { method: 'DELETE' }).then(() => {
+src/pages/Students.tsx:967:                          fetch('/api/eleves/import', {
+src/pages/Students.tsx:1136:              fetch('/api/send-email', {
+src/pages/Login.tsx:30:      const res = await fetch('/api/auth/google/url');
+src/pages/Login.tsx:65:      const response = await fetch('/api/auth/login', {
+src/pages/Schoolinfo.tsx:76:      const response = await fetch('/api/school-info', {
+src/pages/Schoolinfo.tsx:115:      const response = await fetch('/api/school-info', {
+src/pages/SetupPassword.tsx:35:      const res = await fetch('/api/auth/setup-password', {
+src/contexts/TranslationContext.tsx:216:    fetch('/api/school-info', {
+src/contexts/TranslationContext.tsx:228:      fetch('/api/school-info', {
+src/contexts/AuthContext.tsx:32:      const response = await fetch('/api/auth/me', {

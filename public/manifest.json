@@ -1,0 +1,23 @@
+{
+  "name": "MégafixaEduc Pro",
+  "short_name": "Mégafixa",
+  "description": "Système complet de gestion scolaire moderne",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/logo_megafixa.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo_megafixa.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
